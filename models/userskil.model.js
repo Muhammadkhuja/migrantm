@@ -1,5 +1,6 @@
 const sequelize = require("../config/db");
 const { DataTypes } = require("sequelize");
+const Users = require("./users.model");
 
 const User_skills = sequelize.define(
   "user_skills",
@@ -8,9 +9,6 @@ const User_skills = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
     },
     edu_level: {
       type: DataTypes.STRING
@@ -30,5 +28,8 @@ const User_skills = sequelize.define(
     timestamps: false,
   }
 );
+
+User_skills.belongsTo(Users);
+Users.hasMany(User_skills);
 
 module.exports = User_skills;

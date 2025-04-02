@@ -1,5 +1,6 @@
 const sequelize = require("../config/db");
 const { DataTypes } = require("sequelize");
+const Users = require("./users.model");
 
 const User_documents = sequelize.define(
   "user_documents",
@@ -9,9 +10,6 @@ const User_documents = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-    },
     type: {
       type: DataTypes.STRING,
     },
@@ -19,13 +17,16 @@ const User_documents = sequelize.define(
       type: DataTypes.STRING,
     },
     update_at: {
-      type: DataTypes.DATE
-     },
+      type: DataTypes.DATE,
+    },
   },
   {
     freezeTableName: true,
     timestamps: false,
   }
 );
+
+User_documents.belongsTo(Users);
+Users.hasMany(User_documents);
 
 module.exports = User_documents;

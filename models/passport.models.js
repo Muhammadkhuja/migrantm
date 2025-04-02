@@ -1,5 +1,6 @@
 const sequelize = require("../config/db")
-const { DataTypes } = require("sequelize")
+const { DataTypes } = require("sequelize");
+const Users = require("./users.model");
 
 const Passport_data = sequelize.define(
   "passport_data",
@@ -8,9 +9,6 @@ const Passport_data = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
     },
     seria: {
       type: DataTypes.STRING(2),
@@ -40,7 +38,7 @@ const Passport_data = sequelize.define(
       type: DataTypes.STRING(30),
     },
     gender: {
-      type: DataTypes.STRING()
+      type: DataTypes.STRING
     },
   },
   {
@@ -48,5 +46,8 @@ const Passport_data = sequelize.define(
     timestamps: false,
   }
 );
+
+Passport_data.belongsTo(Users);
+Users.hasMany(Passport_data)
 
 module.exports = Passport_data

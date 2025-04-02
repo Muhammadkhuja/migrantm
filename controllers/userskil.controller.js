@@ -1,11 +1,12 @@
 const { errorHandler } = require("../helpers/error_handler");
+const Users = require("../models/users.model");
 const User_skills = require("../models/userskil.model");
 
 const addNewuserskil = async (req, res) => {
   try {
-    const { user_id, edu_level, language, experince, bio } = req.body;
+    const { userId, edu_level, language, experince, bio } = req.body;
     const newuserskil = await User_skills.create({
-      user_id,
+      userId,
       edu_level,
       language,
       experince,
@@ -19,7 +20,7 @@ const addNewuserskil = async (req, res) => {
 
 const findAlluserskil = async (req, res) => {
   try {
-    const newuserskil = await User_skills.findAll();
+    const newuserskil = await User_skills.findAll({include: Users});
     res.status(200).send({ messgae: "New userskil added", newuserskil });
   } catch (error) {
     errorHandler(error, res);
@@ -39,9 +40,9 @@ const findByIduserskil = async (req, res) => {
 const updateuserskil = async (req, res) => {
   try {
     const { id } = req.params;
-    const { user_id, edu_level, language, experince, bio } = req.body;
+    const { userId, edu_level, language, experince, bio } = req.body;
     const newuserskil = await User_skills.update(
-      { user_id, edu_level, language, experince, bio },
+      { userId, edu_level, language, experince, bio },
       { where: { id }, returning: true }
     );
     res.status(200).send({ newuserskil: newuserskil[1][0] });
