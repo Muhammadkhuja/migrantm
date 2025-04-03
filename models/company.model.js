@@ -1,6 +1,7 @@
 const sequelize = require("../config/db");
 
 const { DataTypes } = require("sequelize");
+const Countries = require("./countries.moudels");
 
 const Company = sequelize.define(
   "company",
@@ -34,5 +35,8 @@ const Company = sequelize.define(
     timestamps: false,
   }
 );
+
+Company.belongsTo(Countries);
+Countries.hasMany(Company);
 
 module.exports = Company ;

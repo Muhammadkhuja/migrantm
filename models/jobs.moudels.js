@@ -2,6 +2,8 @@ const sequelize = require("../config/db");
 
 const { DataTypes } = require("sequelize");
 const Company = require("./company.model");
+const Countries = require("./countries.moudels");
+const Category = require("./category.moudels");
 
 const Jobs = sequelize.define(
   "jobs",
@@ -35,5 +37,11 @@ const Jobs = sequelize.define(
 
 Jobs.belongsTo(Company);
 Company.hasMany(Jobs);
+
+Jobs.belongsTo(Countries);
+Countries.hasMany(Jobs);
+
+Jobs.belongsTo(Category);
+Category.hasMany(Jobs);
 
 module.exports = Jobs;
